@@ -1,5 +1,8 @@
-import 'package:budgetlog/api/httpClient.dart';
 import 'package:flutter/material.dart';
+import 'package:budgetlog/api/httpClient.dart';
+import 'package:budgetlog/calendar/calendar_page.dart';
+
+
 
 void main() {
   runApp(ExpenseTrackerApp());
@@ -23,7 +26,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   List<String> expenses = [];
-  final httpClient apiClient = httpClient('http://14.45.90.158:8888'); // Base URL 설정
+  final httpClient apiClient = httpClient('http://211.194.240.209:8888'); // Base URL 설정
 
   @override
   void initState() {
@@ -99,15 +102,26 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildFolderCard(String title) {
-    return Card(
-      elevation: 4,
-      margin: EdgeInsets.all(8.0),
-      child: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Text(
-            title,
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+    return GestureDetector(
+      onTap: () {
+        // 카드 클릭 시 달력 페이지로 전환
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => CalendarPage(budgetName: title),
+          ),
+        );
+      },
+      child: Card(
+        elevation: 4,
+        margin: EdgeInsets.all(8.0),
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Text(
+              title,
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
           ),
         ),
       ),
